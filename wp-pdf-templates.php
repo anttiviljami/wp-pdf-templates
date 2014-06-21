@@ -54,12 +54,6 @@
 define('WP_PDF_TEMPLATES_VERSION', '1.0');
 
 /*
- * Always use the DOMPDF HTML5 parser option
- */
-define('DOMPDF_ENABLE_HTML5PARSER', true);
-
-
-/*
  * This function can be used to set PDF print support for custom post types.
  * Takes an array of post types (strings) as input. See defaults below.
  */
@@ -111,6 +105,18 @@ function _flush_pdf_rewrite_rules() {
   $wp_rewrite->flush_rules(false);
 }
 
+/*
+ * Creates a directory for any new fonts the user may upload
+ */
+register_activation_hook(__FILE__, '_init_dompdf_fonts');
+function _init_dompdf_fonts() {
+  // copy DOMPDF fonts to wp-content/dompdf-fonts/
+  require_once "dompdf/dompdf_config.custom.inc.php";
+  if(!is_dir(DOMPDF_FONT_DIR)) {
+    @mkdir(DOMPDF_FONT_DIR);
+  }
+  copy(dirname(__FILE__) . '/dompdf/lib/fonts/dompdf_font_family_cache.dist.php', DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php');
+}
 
 /*
  * Applies print templates to the pages and starts the output buffer
