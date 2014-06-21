@@ -42,22 +42,27 @@ If you wish to define different templates for different post types, you can do t
 
 You can define supported post types in your theme functions.php with `set_pdf_print_support($post_types)`
 
+The set_pdf_print_support function takes an array of post types (strings) as a parameter.
+
 Example:
 `// add pdf print support to post type 'product'
 set_pdf_print_support(array('post', 'page', 'product'));`
 
-= Can I change the PDF output paper size, orientation and DPI? =
+= Can I change the PDF output paper size, orientation or DPI? =
 
 Yes! You can define settings for the DOMPDF Library by editing your wp-config.php.
 
-Example:
+Example usage:
 `// use landscape A4 sized paper @ 180 DPI
 define('DOMPDF_PAPER_SIZE', 'A4');
 define('DOMPDF_PAPER_ORIENTATION', 'landscape');
-define('DOMPDF_DPI', 180);
-`
+define('DOMPDF_DPI', 180);`
 
 See DOMPDF documentation for more options.
+
+= My fonts don't show in the PDF. Can I fix that? =
+
+DOMPDF needs the proper font files to generate PDF files. There's a font adder utility built in to DOMPDF you can use to import any TrueType fonts. See this link for instructions: https://code.google.com/p/dompdf/wiki/Installation
 
 == Screenshots == 
 
@@ -68,7 +73,7 @@ None yet.
 Note that complete commit log is available at https://github.com/anttiviljami/wp-pdf-templates/commits/master
 
 = 1.0 =
-* Initial release to WordPress.org
+Initial release to WordPress.org
 
 == Upgrade Notice ==
 
