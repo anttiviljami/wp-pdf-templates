@@ -34,7 +34,7 @@ Source available at https://github.com/anttiviljami/wp-pdf-templates
 
 = I don't like the way my PDF printing looks. How do I change it? =
 
-Just copy the index-pdf.php from wp-content/plugins/wp-dompdf-template to your theme directory and start editing!
+Just copy the index-pdf.php from wp-content/plugins/wp-pdf-templates/ to your theme directory and start editing!
 
 If you wish to define different templates for different post types, you can do that too! Let's say you wish to create a new PDF template for pages. Just create a file called 'page-pdf.php' and create your template there. Note that this only works when a page.php exists in your theme.
 
@@ -46,7 +46,9 @@ The set_pdf_print_support function takes an array of post types (strings) as a p
 
 Example:
 `// add pdf print support to post type 'product'
-set_pdf_print_support(array('post', 'page', 'product'));`
+if(function_exists('set_pdf_print_support')) {
+  set_pdf_print_support(array('post', 'page', 'product'));
+}`
 
 = Can I change the PDF output paper size, orientation or DPI? =
 

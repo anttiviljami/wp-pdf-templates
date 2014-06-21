@@ -51,7 +51,7 @@
 /*
  * Track plugin version number
  */
-define('WP_DOMPDF_TEMPLATE_VERSION', '1.0');
+define('WP_PDF_TEMPLATES_VERSION', '1.0');
 
 /*
  * Always use the DOMPDF HTML5 parser option
@@ -140,7 +140,7 @@ function _use_pdf_template() {
 
       // output generator meta to help debugging
       add_action('wp_head', function() {
-        echo "\n\n" . '<meta name="generator" content="Wordpress PDF Downloads Version ' . WP_DOMPDF_TEMPLATE_VERSION . '">' . "\n\n     ";
+        echo "\n\n" . '<meta name="generator" content="Wordpress PDF Downloads Version ' . WP_PDF_TEMPLATES_VERSION . '">' . "\n\n     ";
       });
 
       // use the print template
