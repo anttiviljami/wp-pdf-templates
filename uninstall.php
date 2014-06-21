@@ -18,9 +18,10 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 $upload_dir = wp_upload_dir();
 
 /*
- * Remove the font directory created by this plugin
+ * Remove directories created by this plugin
  */
-rrmdir($upload_dir['basedir'] . '/dompdf-fonts');
+is_dir($upload_dir['basedir'] . '/dompdf-fonts') && rrmdir($upload_dir['basedir'] . '/dompdf-fonts');
+is_dir($upload_dir['basedir'] . '/pdf-cache') && rrmdir($upload_dir['basedir'] . '/pdf-cache');
 
 /*
  * Handles recursive remove.

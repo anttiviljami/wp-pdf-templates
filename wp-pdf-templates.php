@@ -54,6 +54,17 @@
 define('WP_PDF_TEMPLATES_VERSION', '1.0');
 
 /*
+ * Option to disable PDF caching
+ */
+//define('DISABLE_PDF_CACHE', true);
+
+/*
+ * Set PDF file cache directory
+ */
+$upload_dir = wp_upload_dir();
+define('PDF_CACHE_DIRECTORY', $upload_dir['basedir'] . '/pdf-cache/');
+
+/*
  * This function can be used to set PDF print support for custom post types.
  * Takes an array of post types (strings) as input. See defaults below.
  */
@@ -213,30 +224,52 @@ function _pdf_buffer_end() {
 function _print_pdf($html) {
   global $wp_query;
 
-  if (!headers_sent()) {
-    // Disable Caching for PDF output
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-    header('Cache-Control: no-store, no-cache, must-revalidate');
-    header('Cache-Control: post-check=0, pre-check=0', false);
-    header('Pragma: no-cache');
-  }
-
   if (isset($wp_query->query_vars['pdf'])) {
     // convert to PDF
 
-    // include the library
-    require_once plugin_dir_path(__FILE__) . 'dompdf/dompdf_config.inc.php';
+    $filename = get_the_title() . '.pdf';
+    $cached = PDF_CACHE_DIRECTORY . get_the_title() . '-' . substr(md5(get_the_modified_time()), -6) . '.pdf';
+    $request_headers = _get_request_headers();
 
-    // html to pdf conversion
-    $dompdf = new DOMPDF();
-    $dompdf->set_paper(
-      defined('DOMPDF_PAPER_SIZE') ? DOMPDF_PAPER_SIZE : DOMPDF_DEFAULT_PAPER_SIZE,
-      defined('DOMPDF_PAPER_ORIENTATION') ? DOMPDF_PAPER_ORIENTATION : 'portrait');
-    $dompdf->load_html($html);
-    $dompdf->set_base_path(get_stylesheet_directory_uri());
-    $dompdf->render();
-    $dompdf->stream(get_the_title() . '.pdf');
+    // check if we need to generate PDF
+    if($request_headers['Cache-Control'] == 'no-cache' || $request_headers['Pragma'] == 'no-cache' || !file_exists($cached) || (defined('DISABLE_PDF_CACHE') && DISABLE_PDF_CACHE)) {
+
+      // we may need more than 30 seconds execution time
+      set_time_limit(60);
+
+      // include the library
+      require_once plugin_dir_path(__FILE__) . 'dompdf/dompdf_config.inc.php';
+
+      // html to pdf conversion
+      $dompdf = new DOMPDF();
+      $dompdf->set_paper(
+        defined('DOMPDF_PAPER_SIZE') ? DOMPDF_PAPER_SIZE : DOMPDF_DEFAULT_PAPER_SIZE,
+        defined('DOMPDF_PAPER_ORIENTATION') ? DOMPDF_PAPER_ORIENTATION : 'portrait');
+      $dompdf->load_html($html);
+      $dompdf->set_base_path(get_stylesheet_directory_uri());
+      $dompdf->render();
+
+      if(defined('DISABLE_PDF_CACHE') && DISABLE_PDF_CACHE) {
+        //just stream the PDF to user if caches are disabled
+        return $dompdf->stream($filename, array("Attachment" => false));
+      }
+
+      // create PDF cache if one doesn't yet exist
+      if(!is_dir(PDF_CACHE_DIRECTORY)) {
+        @mkdir(PDF_CACHE_DIRECTORY);
+      }
+
+      //save the pdf file to cache
+      file_put_contents($cached, $dompdf->output());
+    }
+
+    //read and display the cached file
+    header('Content-type: application/pdf');
+    header('Content-Disposition: inline; filename="' . $filename . '"');
+    header('Content-Transfer-Encoding: binary');
+    header('Content-Length: ' . filesize($cached));
+    header('Accept-Ranges: bytes');
+    readfile($cached);
 
   }
 
@@ -245,4 +278,17 @@ function _print_pdf($html) {
     echo $html;
   }
 
+}
+
+/*
+ * Gets any request headers passed to the script
+ */
+function _get_request_headers() {
+  $headers = '';
+  foreach ($_SERVER as $name => $value) {
+    if (substr($name, 0, 5) == 'HTTP_') {
+      $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+    }
+  }
+  return $headers;
 }
