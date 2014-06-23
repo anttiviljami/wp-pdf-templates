@@ -26,9 +26,8 @@ Source available at https://github.com/anttiviljami/wp-pdf-templates
 
 == Installation ==
 
-1. Upload plugin to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the "Plugins" menu in WordPress.
-3. Installation done!
+1. Download and activate the plugin.
+2. Installation done! You van now navigate to any post or page and append /pdf/ (or &pdf if not using pretty permalinks) to the URL to see a gorgeous PDF version of your post.
 
 == Frequently Asked Questions ==
 
