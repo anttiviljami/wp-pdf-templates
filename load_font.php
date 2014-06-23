@@ -12,9 +12,12 @@
 /*
  * Require the WP Environment
  */
-// Here is where you would require wp-load but Wordpress.org doesn't allow this.
-// Just edit this line to require it if you want to use the font loading script
-// in the command line. Coming soon: Admin Interface to implement this properly.
+// This is where we require wp-load. Uncomment the line below to make this script work.
+// require_once base64_decode("Li4vLi4vLi4vd3AtbG9hZC5waHA=");
+
+// Don't forget to comment this! ->
+exit("Sorry! Wordpress.org didn't allow us to include this command line tool in the plugin. If you wish to use it (at your own discretion) you need to edit this file to require wp-load");
+// <- Don't forget to comment this!
 
 /*
  * Pass to the DOMPDF load_font command line tool
