@@ -11,8 +11,15 @@
 
 /*
  * Require the WP Environment
+ *
+ * Wordpress.org actually doesn't allow us to do this from outside of WP
+ * itself. To make this plugin pass through the wp.org plugin validation
+ * process, we've had to disable this script for now.
+ *
+ * Instructions below on how to re-enable at your own discretion:
  */
-// This is where we require wp-load. Uncomment the line below to make this script work.
+
+// This is where we require wp-load. Just uncomment the line below.
 // require_once base64_decode("Li4vLi4vLi4vd3AtbG9hZC5waHA=");
 
 // Don't forget to comment this! ->
