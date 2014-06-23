@@ -12,7 +12,9 @@
 /*
  * Require the WP Environment
  */
-require_once "../../../wp-load.php";
+// Here is where you would require wp-load but Wordpress.org doesn't allow this.
+// Just edit this line to require it if you want to use the font loading script
+// in the command line. Coming soon: Admin Interface to implement this properly.
 
 /*
  * Pass to the DOMPDF load_font command line tool
