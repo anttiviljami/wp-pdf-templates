@@ -71,10 +71,10 @@ None yet.
 
 == Changelog ==
 
-Note that complete commit log is available at https://github.com/anttiviljami/wp-pdf-templates/commits/master
-
 = 1.0 =
 Initial release to WordPress.org
+
+Note that complete commit log is available at https://github.com/seravo/wp-pdf-templates/commits/master
 
 == Upgrade Notice ==
 
