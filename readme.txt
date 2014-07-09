@@ -31,9 +31,15 @@ Source available at https://github.com/anttiviljami/wp-pdf-templates
 
 == Frequently Asked Questions ==
 
+= I activated the plugin but can't see any difference. What do I do? =
+
+Wordpress PDF Templates works quietly in the backround without cluttering your wp-admin with unnecessary menus and views.
+
+To see this plugin in action, try navigating to any post or page on your site and appending /pdf/ to the URL.
+
 = I don't like the way my PDF printing looks. How do I change it? =
 
-Just copy the index-pdf.php from wp-content/plugins/wp-pdf-templates/ to your theme directory and start editing!
+Just copy index-pdf.php from wp-content/plugins/wp-pdf-templates/ into your theme directory and start editing!
 
 If you wish to define different templates for different post types, you can do that too! Let's say you wish to create a new PDF template for pages. Just create a file called 'page-pdf.php' and create your template there. Note that this only works when a page.php exists in your theme.
 
@@ -43,7 +49,7 @@ You can define supported post types in your theme functions.php with `set_pdf_pr
 
 The set_pdf_print_support function takes an array of post types (strings) as a parameter.
 
-Example:
+Example: 
 `// add pdf print support to post type 'product'
 if(function_exists('set_pdf_print_support')) {
   set_pdf_print_support(array('post', 'page', 'product'));
@@ -53,7 +59,7 @@ if(function_exists('set_pdf_print_support')) {
 
 Yes! You can define settings for the DOMPDF Library by editing your wp-config.php.
 
-Example usage:
+Example: 
 `// use landscape A4 sized paper @ 180 DPI
 define('DOMPDF_PAPER_SIZE', 'A4');
 define('DOMPDF_PAPER_ORIENTATION', 'landscape');
@@ -67,7 +73,7 @@ DOMPDF needs the proper font files to generate PDF files. There's a font adder u
 
 == Screenshots == 
 
-See example use of this plugin here: http://vetrospace.com/
+1. See example use of this plugin here: http://vetrospace.com/
 
 == Changelog ==
 
