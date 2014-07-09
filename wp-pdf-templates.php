@@ -3,7 +3,7 @@
  * Plugin Name: Wordpress PDF Templates
  * Plugin URI: http://seravo.fi
  * Description: This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
- * Version: 1.0
+ * Version: 1.1
  * Author: Antti Kuosmanen (Seravo Oy)
  * Author URI: http://seravo.fi
  * License: GPLv3
@@ -51,7 +51,7 @@
 /*
  * Track plugin version number
  */
-define('WP_PDF_TEMPLATES_VERSION', '1.0');
+define('WP_PDF_TEMPLATES_VERSION', '1.1');
 
 /*
  * Option to disable PDF caching
@@ -91,6 +91,7 @@ add_action('init', '_pdf_rewrite');
 function _pdf_rewrite() {
   add_rewrite_endpoint('pdf', EP_ALL);
   add_rewrite_endpoint('pdf-preview', EP_ALL);
+  add_rewrite_endpoint('pdf-template', EP_ALL);
 }
 
 /*
@@ -100,6 +101,7 @@ add_filter('query_vars', '_get_pdf_query_vars');
 function _get_pdf_query_vars($query_vars) {
   $query_vars[] = 'pdf';
   $query_vars[] = 'pdf-preview';
+  $query_vars[] = 'pdf-template';
   return $query_vars;
 }
 
@@ -130,18 +132,17 @@ function _init_dompdf_fonts() {
 }
 
 /*
- * Applies print templates to the pages and starts the output buffer
+ * Applies print templates
  */
 add_action('template_redirect', '_use_pdf_template');
 function _use_pdf_template() {
-  global $wp_query;
+  global $wp_query, $pdf_post_types;
 
-  if (isset($wp_query->query_vars['pdf']) || isset($wp_query->query_vars['pdf-preview'])) {
+  if(in_array(get_post_type(), $pdf_post_types)) {
 
-    //check to see if post type is supported
-    global $pdf_post_types;
+    if (isset($wp_query->query_vars['pdf-template'])) {
 
-    if(in_array(get_post_type(), $pdf_post_types)) {
+      // Substitute the PDF printing template
 
       // disable scripts and stylesheets
       // NOTE: We do this because in most cases the stylesheets used on the site
@@ -168,7 +169,6 @@ function _use_pdf_template() {
         // i.e. to use single-product-pdf.php you must also have single-product.php
         $pdf_template = str_replace('.php', '-pdf.php', basename($template));
 
-        $template_path = plugin_dir_path(__FILE__) . 'index-pdf.php';
         if(file_exists(get_stylesheet_directory() . '/' . $pdf_template)) {
           $template_path = get_stylesheet_directory() . '/' . $pdf_template;
         }
@@ -178,16 +178,34 @@ function _use_pdf_template() {
         else if(file_exists(plugin_dir_path(__FILE__) . $pdf_template)) {
           $template_path = plugin_dir_path(__FILE__) . $pdf_template;
         }
-
+        else if(file_exists(get_stylesheet_directory() . '/' . 'index-pdf.php')) {
+          $template_path = get_stylesheet_directory() . '/' . 'index-pdf.php';
+        }
+        else if(file_exists(get_template_directory() . '/' . 'index-pdf.php')) {
+          $template_path = get_template_directory() . '/' . 'index-pdf.php';
+        }
+        else {
+          $template_path = plugin_dir_path(__FILE__) . 'index-pdf.php';
+        }
         return $template_path;
 
       });
 
-      // start output buffer
-      ob_start();
-      add_action('wp_footer', '_pdf_buffer_end');
+    }
+
+    if(isset($wp_query->query_vars['pdf']) || isset($wp_query->query_vars['pdf-preview'])) {
+
+      // load the generated html from the template endpoint
+      $html = file_get_contents(get_the_permalink() . '?pdf-template');
+
+      // process the html output
+      $html = apply_filters('pdf_template_html', $html);
+
+      // pass for printing
+      _print_pdf($html);
 
     }
+
   }
 }
 
@@ -202,19 +220,16 @@ function _remove_dep_arrays() {
 
 
 /*
- * Passes output buffer to DOMPDF Lib
+ * Filters the html generated from the template for printing
  */
-function _pdf_buffer_end() {
-  // capture and terminate output buffer
-  $html = ob_get_contents();
-  ob_end_clean();
+add_filter('pdf_template_html', '_process_pdf_template_html');
+function _process_pdf_template_html($html) {
 
-  // process the html output
+  // relative to absolute links
   $html = preg_replace('/src\s*=\s*"\//', 'src="' . home_url('/'), $html);
   $html = preg_replace('/src\s*=\s*\'\//', "src='" . home_url('/'), $html);
 
-  // pass for printing
-  _print_pdf($html);
+  return $html;
 }
 
 
@@ -231,7 +246,7 @@ function _print_pdf($html) {
     $cached = PDF_CACHE_DIRECTORY . get_the_title() . '-' . substr(md5(get_the_modified_time()), -6) . '.pdf';
     $request_headers = _get_request_headers();
 
-    // check if we need to generate PDF
+    // check if we need to generate PDF against cache
     if($request_headers['Cache-Control'] == 'no-cache' || $request_headers['Pragma'] == 'no-cache' || !file_exists($cached) || (defined('DISABLE_PDF_CACHE') && DISABLE_PDF_CACHE)) {
 
       // we may need more than 30 seconds execution time
@@ -277,6 +292,9 @@ function _print_pdf($html) {
     // print the HTML raw
     echo $html;
   }
+
+  // kill php after output is complete
+  die();
 
 }
 
