@@ -51,7 +51,7 @@
 /*
  * Track plugin version number
  */
-define('WP_PDF_TEMPLATES_VERSION', '1.1');
+define('WP_PDF_TEMPLATES_VERSION', '1.2');
 
 /*
  * Option to disable PDF caching
