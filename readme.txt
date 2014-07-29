@@ -78,7 +78,7 @@ DOMPDF needs the proper font files to generate PDF files. There's a font adder u
 == Changelog ==
 
 = 1.2.1 =
-Fix issue with pretty permalinks disabled
+Fix issue with pretty permalinks disabled. Thanks Triskal!
 
 = 1.2 =
 Cookies added to template requests
