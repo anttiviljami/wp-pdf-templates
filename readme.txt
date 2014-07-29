@@ -78,18 +78,16 @@ DOMPDF needs the proper font files to generate PDF files. There's a font adder u
 == Changelog ==
 
 = 1.2.1 =
-Fix issue with pretty permalinks disabled. Thanks Triskal!
+* Fixes issue with pretty permalinks disabled. Thanks Triskal!
 
 = 1.2 =
-Cookies added to template requests
+* Cookies added to template requests
 
 = 1.1 =
-HTML output is no longer based on output buffering, which makes everything more stable
+* HTML output is no longer based on output buffering, which makes everything more stable
 
 = 1.0 =
-Initial release to WordPress.org
-
-Note that complete commit log is available at https://github.com/seravo/wp-pdf-templates/commits/master
+* Initial release to WordPress.org
 
 == Upgrade Notice ==
 
