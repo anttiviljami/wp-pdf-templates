@@ -3,7 +3,7 @@
  * Plugin Name: Wordpress PDF Templates
  * Plugin URI: http://seravo.fi
  * Description: This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
- * Version: 1.3.2
+ * Version: 1.3.3
  * Author: Antti Kuosmanen (Seravo Oy)
  * Author URI: http://seravo.fi
  * License: GPLv3
@@ -51,7 +51,7 @@
 /*
  * Track plugin version number
  */
-define('WP_PDF_TEMPLATES_VERSION', '1.3.2');
+define('WP_PDF_TEMPLATES_VERSION', '1.3.3');
 
 /*
  * Option to disable PDF caching
@@ -137,7 +137,12 @@ function _init_dompdf_fonts() {
   if(!is_dir(DOMPDF_FONT_DIR)) {
     @mkdir(DOMPDF_FONT_DIR);
   }
-  copy(dirname(__FILE__) . '/dompdf/lib/fonts/dompdf_font_family_cache.dist.php', DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php');
+  if(!file_exists(DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php')) {
+    copy(
+      dirname(__FILE__) . '/dompdf/lib/fonts/dompdf_font_family_cache.dist.php', 
+      DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php'
+      );
+  }
 }
 
 /*
