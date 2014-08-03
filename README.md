@@ -22,6 +22,7 @@ For further information see **readme.txt**.
 ```sh
 git clone https://github.com/anttiviljami/wp-pdf-templates.git
 cd wp-pdf-templates
-git submodule update --init --recursive```
+git submodule update --init --recursive
+```
 2. Activate plugin in the WordPress admin
 3. Installation done! 
