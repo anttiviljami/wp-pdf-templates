@@ -18,8 +18,7 @@ For further information see **readme.txt**.
 
 ## Installation with Git
 
-1. From the command line, cd to wp-content/plugins and run the following commands. 
-```sh
+1. From the command line, cd to wp-content/plugins and run the following commands. ```sh
 git clone https://github.com/anttiviljami/wp-pdf-templates.git
 cd wp-pdf-templates
 git submodule update --init --recursive
