@@ -4,10 +4,9 @@
  * Can also be used with HTTP GET parameters
  * 
  * @package dompdf
- * @link    http://www.dompdf.com/
+ * @link    http://dompdf.github.com/
  * @author  Benj Carson <benjcarson@digitaljunkies.ca>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
- * @version $Id: dompdf.php 448 2011-11-13 13:00:03Z fabien.menager $
  */
 
 /**
@@ -224,8 +223,12 @@ switch ( $sapi ) {
   if(($file_parts['protocol'] == '' || $file_parts['protocol'] === 'file://')) {
     $file = realpath($file);
     if ( strpos($file, DOMPDF_CHROOT) !== 0 ) {
-      throw new DOMPDF_Exception("Permission denied on $file.");
+      throw new DOMPDF_Exception("Permission denied on $file. The file could not be found under the directory specified by DOMPDF_CHROOT.");
     }
+  }
+  
+  if($file_parts['protocol'] === 'php://') {
+    throw new DOMPDF_Exception("Permission denied on $file. This script does not allow PHP streams.");
   }
   
   $outfile = "dompdf_out.pdf"; # Don't allow them to set the output file
