@@ -3,7 +3,7 @@
  * Plugin Name: Wordpress PDF Templates
  * Plugin URI: http://seravo.fi
  * Description: This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
- * Version: 1.2.1
+ * Version: 1.3
  * Author: Antti Kuosmanen (Seravo Oy)
  * Author URI: http://seravo.fi
  * License: GPLv3
@@ -51,7 +51,7 @@
 /*
  * Track plugin version number
  */
-define('WP_PDF_TEMPLATES_VERSION', '1.2.1');
+define('WP_PDF_TEMPLATES_VERSION', '1.3');
 
 /*
  * Option to disable PDF caching
@@ -156,40 +156,8 @@ function _use_pdf_template() {
       add_filter('show_admin_bar', '__return_false');
       remove_action('wp_head', '_admin_bar_bump_cb');
 
-      // output generator meta to help debugging
-      add_action('wp_head', function() {
-        echo "\n\n" . '<meta name="generator" content="Wordpress PDF Downloads Version ' . WP_PDF_TEMPLATES_VERSION . '">' . "\n\n     ";
-      });
-
       // use the print template
-      add_filter('template_include', function($template) {
-
-        // locate proper template file
-        // NOTE: this only works if the standard template file exists as well
-        // i.e. to use single-product-pdf.php you must also have single-product.php
-        $pdf_template = str_replace('.php', '-pdf.php', basename($template));
-
-        if(file_exists(get_stylesheet_directory() . '/' . $pdf_template)) {
-          $template_path = get_stylesheet_directory() . '/' . $pdf_template;
-        }
-        else if(file_exists(get_template_directory() . '/' . $pdf_template)) {
-          $template_path = get_template_directory() . '/' . $pdf_template;
-        }
-        else if(file_exists(plugin_dir_path(__FILE__) . $pdf_template)) {
-          $template_path = plugin_dir_path(__FILE__) . $pdf_template;
-        }
-        else if(file_exists(get_stylesheet_directory() . '/' . 'index-pdf.php')) {
-          $template_path = get_stylesheet_directory() . '/' . 'index-pdf.php';
-        }
-        else if(file_exists(get_template_directory() . '/' . 'index-pdf.php')) {
-          $template_path = get_template_directory() . '/' . 'index-pdf.php';
-        }
-        else {
-          $template_path = plugin_dir_path(__FILE__) . 'index-pdf.php';
-        }
-        return $template_path;
-
-      });
+      add_filter('template_include', '_locate_pdf_template');
 
     }
 
@@ -223,6 +191,38 @@ function _use_pdf_template() {
     }
 
   }
+}
+
+/*
+ * Locates the theme pdf template file to be used
+ */
+function _locate_pdf_template($template) {
+
+  // locate proper template file
+  // NOTE: this only works if the standard template file exists as well
+  // i.e. to use single-product-pdf.php you must also have single-product.php
+  $pdf_template = str_replace('.php', '-pdf.php', basename($template));
+
+  if(file_exists(get_stylesheet_directory() . '/' . $pdf_template)) {
+    $template_path = get_stylesheet_directory() . '/' . $pdf_template;
+  }
+  else if(file_exists(get_template_directory() . '/' . $pdf_template)) {
+    $template_path = get_template_directory() . '/' . $pdf_template;
+  }
+  else if(file_exists(plugin_dir_path(__FILE__) . $pdf_template)) {
+    $template_path = plugin_dir_path(__FILE__) . $pdf_template;
+  }
+  else if(file_exists(get_stylesheet_directory() . '/' . 'index-pdf.php')) {
+    $template_path = get_stylesheet_directory() . '/' . 'index-pdf.php';
+  }
+  else if(file_exists(get_template_directory() . '/' . 'index-pdf.php')) {
+    $template_path = get_template_directory() . '/' . 'index-pdf.php';
+  }
+  else {
+    $template_path = plugin_dir_path(__FILE__) . 'index-pdf.php';
+  }
+  return $template_path;
+
 }
 
 
