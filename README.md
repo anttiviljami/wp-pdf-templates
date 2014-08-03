@@ -13,15 +13,18 @@ For further information see **readme.txt**.
 
 ## Installation from WordPress admin
 
-1. Download and activate the plugin.
-2. Installation done! You can now navigate to any post or page on your website and append /pdf/ (or &pdf if not using pretty permalinks) to the URL to view a glorious PDF version of it.
+Download and activate the plugin.
+
+Installation done! You can now navigate to any post or page on your website and append /pdf/ (or &pdf if not using pretty permalinks) to the URL to view a glorious PDF version of it.
 
 ## Installation with Git
 
-1. From the command line, cd to wp-content/plugins and run the following commands. ```sh
+From the command line, cd to wp-content/plugins and run the following commands. 
+```sh
 git clone https://github.com/anttiviljami/wp-pdf-templates.git
 cd wp-pdf-templates
 git submodule update --init --recursive
 ```
-2. Activate plugin in the WordPress admin
-3. Installation done! 
+Activate plugin in the WordPress admin
+
+Installation done! 
