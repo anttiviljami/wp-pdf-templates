@@ -55,8 +55,22 @@ define('WP_PDF_TEMPLATES_VERSION', '1.3.4');
 
 /*
  * Option to disable PDF caching
+ *
+ * This can be used for rapidly changing content that's uncacheable, such as 
+ * dynamically generated feeds or user-tailored views. 
  */
 //define('DISABLE_PDF_CACHE', true);
+
+
+/*
+ * Option to enable cookies on fetching the PDF template HTML.
+ *
+ * This might be useful if the content or access to it depends on browser 
+ * cookies. A possible use scenario for this could be when a login 
+ * authentification is required to access the content.
+ */
+//define('FETCH_COOKIES_ENABLED', true);
+
 
 /*
  * Set PDF file cache directory
@@ -72,7 +86,8 @@ if (!defined('PDF_CACHE_DIRECTORY'))
 if (!defined('DOMPDF_ENABLE_REMOTE'))
   define('DOMPDF_ENABLE_REMOTE', true);
 
-/* 
+
+/*
  * Redefine font directories
  */
 if (!defined('DOMPDF_FONT_DIR'))
@@ -148,7 +163,7 @@ function _init_dompdf_fonts() {
   }
   if(!file_exists(DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php')) {
     copy(
-      dirname(__FILE__) . '/dompdf/lib/fonts/dompdf_font_family_cache.dist.php', 
+      dirname(__FILE__) . '/dompdf/lib/fonts/dompdf_font_family_cache.dist.php',
       DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php'
       );
   }
@@ -192,18 +207,25 @@ function _use_pdf_template() {
         $cookies[] = $ckey . '=' . $cval;
       }
 
-      // create a context for file_get_contents
-      $context = stream_context_create(array(
-        'http' => array(
-          'method' => 'GET',
-          'header' => 'Accept:text/html' . "\n" .
-                      'Cookie: ' . join($cookies, '; '),
-        )
-      ));
-
       // load the generated html from the template endpoint
       $link = get_the_permalink();
-      $html = file_get_contents($link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template', false, $context);
+
+      if( defined('FETCH_COOKIES_ENABLED') && FETCH_COOKIES_ENABLED ) {
+        // do the request using cookies provided
+        $context = stream_context_create(array(
+          'http' => array(
+            'method' => 'GET',
+            'header' => 'Accept:text/html' . "\n" .
+                        'Cookie: ' . join($cookies, '; '),
+          )
+        ));
+        $html = file_get_contents($link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template', false, $context);
+      }
+
+      else {
+        // request without cookies
+        $html = file_get_contents($link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template');
+      }
 
       // process the html output
       $html = apply_filters('pdf_template_html', $html);
