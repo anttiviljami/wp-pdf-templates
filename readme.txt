@@ -1,10 +1,10 @@
 === Wordpress PDF Templates ===
 Contributors: Zuige, ottok
-Tags: pdf, dompdf, templates, print
+Tags: pdf, dompdf, templates, print, seravo
 Donate link: http://seravo.fi/
 Requires at least: 3.8.0
 Tested up to: 4.0
-Stable tag: 1.3.5
+Stable tag: 1.3.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
