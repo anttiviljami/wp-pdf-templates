@@ -1,9 +1,9 @@
 === Wordpress PDF Templates ===
-Contributors: Zuige
+Contributors: Zuige, ottok
 Tags: pdf, dompdf, templates, print
 Donate link: http://seravo.fi/
 Requires at least: 3.8.0
-Tested up to: 3.9.2
+Tested up to: 4.0
 Stable tag: 1.3.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -22,7 +22,7 @@ The PDF output can be customized by copying the index-pdf.php file from the plug
 
 Stylesheets used on the site are disabled by default, but you can define your own stylesheets within the pdf-template.php file. PDF Templates can be previewed as raw HTML at the /pdf-preview URL endpoint.
 
-Source available at https://github.com/anttiviljami/wp-pdf-templates
+Source available at https://github.com/Seravo/wp-pdf-templates
 
 == Installation ==
 
