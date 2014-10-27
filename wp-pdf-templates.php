@@ -204,9 +204,9 @@ function _use_pdf_template() {
       // reconstruct cookies into header form
       $cookies = array();
       foreach($_COOKIE as $ckey => $cval) {
-        // disregard cookies if keys contain non-ASCII characters
-        if( mb_check_encoding( $ckey , 'ASCII' ) ) {
-          $cookies[] = $ckey . '=' . rawurlencode( $cval ); // values are urlencoded
+        // disregard any cookies whose keys contain disallowed characters
+        if( preg_match('/[0-9a-zA-Z_-]/', $ckey ) ) {
+          $cookies[] = $ckey . '=' . rawurlencode( $cval ); // values should be urlencoded
         }
       }
 
