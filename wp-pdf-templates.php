@@ -204,7 +204,10 @@ function _use_pdf_template() {
       // reconstruct cookies into header form
       $cookies = array();
       foreach($_COOKIE as $ckey => $cval) {
-        $cookies[] = $ckey . '=' . $cval;
+        // disregard cookies if keys contain non-ASCII characters
+        if( preg_match('/[^\x20-\x7f]/', $ckey ) ) {
+          $cookies[] = $ckey . '=' . rawurlencode( $cval ); // values are urlencoded 
+        }
       }
 
       // load the generated html from the template endpoint
