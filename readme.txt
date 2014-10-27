@@ -77,6 +77,10 @@ DOMPDF needs the proper font files to generate PDF files. There's a font adder u
 
 == Changelog ==
 
+= 1.3.6 =
+* Added more cookie logic and a fix for non-encoded cookies
+* General cleanup of documentation & code
+
 = 1.3.5 =
 * Request cookie relaying is now optional and disabled by default
 * If this update causes any issues, try enabling the constant FETCH_COOKIES_ENABLED
