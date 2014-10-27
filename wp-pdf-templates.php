@@ -56,8 +56,8 @@ define('WP_PDF_TEMPLATES_VERSION', '1.3.5');
 /*
  * Option to disable PDF caching
  *
- * This can be used for rapidly changing content that's uncacheable, such as 
- * dynamically generated feeds or user-tailored views. 
+ * This can be used for rapidly changing content that's uncacheable, such as
+ * dynamically generated feeds or user-tailored views.
  */
 //define('DISABLE_PDF_CACHE', true);
 
@@ -65,8 +65,8 @@ define('WP_PDF_TEMPLATES_VERSION', '1.3.5');
 /*
  * Option to enable cookies on fetching the PDF template HTML.
  *
- * This might be useful if the content or access to it depends on browser 
- * cookies. A possible use scenario for this could be when a login 
+ * This might be useful if the content or access to it depends on browser
+ * cookies. A possible use scenario for this could be when a login
  * authentification is required to access the content.
  */
 //define('FETCH_COOKIES_ENABLED', true);
@@ -205,8 +205,8 @@ function _use_pdf_template() {
       $cookies = array();
       foreach($_COOKIE as $ckey => $cval) {
         // disregard cookies if keys contain non-ASCII characters
-        if( preg_match('/[^\x20-\x7f]/', $ckey ) ) {
-          $cookies[] = $ckey . '=' . rawurlencode( $cval ); // values are urlencoded 
+        if( mb_check_encoding( $ckey , 'ASCII' ) ) {
+          $cookies[] = $ckey . '=' . rawurlencode( $cval ); // values are urlencoded
         }
       }
 
