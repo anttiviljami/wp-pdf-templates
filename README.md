@@ -21,7 +21,7 @@ Installation done! You can now navigate to any post or page on your website and 
 
 From the command line, cd to wp-content/plugins and run the following commands. 
 ```sh
-git clone https://github.com/anttiviljami/wp-pdf-templates.git
+git clone https://github.com/Seravo/wp-pdf-templates.git
 cd wp-pdf-templates
 git submodule update --init --recursive
 ```

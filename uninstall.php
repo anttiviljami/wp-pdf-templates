@@ -2,7 +2,7 @@
 /**
  * Filename: uninstall.php
  * Project: Wordpress PDF Templates
- * Copyright: (c) 2014 Seravo
+ * Copyright: (c) 2014 Seravo Oy
  * License: GPLv3
  *
  * This file gets called when the plugin is uninstalled from Wordpress.

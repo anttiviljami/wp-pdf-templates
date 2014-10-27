@@ -3,7 +3,7 @@
 /**
  * Filename: load_font.php
  * Project: Wordpress PDF Templates
- * Copyright: (c) 2014 Seravo
+ * Copyright: (c) 2014 Seravo Oy
  * License: GPLv3
  *
  * Use this to load a font from the command line.
