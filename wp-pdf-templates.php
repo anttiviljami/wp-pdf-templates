@@ -199,29 +199,23 @@ function _use_pdf_template() {
 
     }
 
+    // our post permalink
+    $link = get_the_permalink();
+
     if(isset($wp_query->query_vars['pdf']) || isset($wp_query->query_vars['pdf-preview'])) {
 
-      // reconstruct cookies into header form
-      $cookies = array();
-      foreach($_COOKIE as $ckey => $cval) {
-        // disregard any cookies whose keys contain disallowed characters
-        if( preg_match('/[0-9a-zA-Z_-]/', $ckey ) ) {
-          $cookies[] = $ckey . '=' . rawurlencode( $cval ); // values should be urlencoded
-        }
-      }
-
-      // load the generated html from the template endpoint
-      $link = get_the_permalink();
-
       if( defined('FETCH_COOKIES_ENABLED') && FETCH_COOKIES_ENABLED ) {
+
         // do the request using cookies provided
         $context = stream_context_create(array(
           'http' => array(
             'method' => 'GET',
             'header' => 'Accept:text/html' . "\n" .
-                        'Cookie: ' . join($cookies, '; '),
+                        'Cookie: ' . $_SERVER['HTTP_COOKIE'],
           )
         ));
+
+        // load the generated html from the template endpoint
         $html = file_get_contents($link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template', false, $context);
       }
 
