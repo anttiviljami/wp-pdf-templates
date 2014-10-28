@@ -3,7 +3,7 @@
  * Plugin Name: Wordpress PDF Templates
  * Plugin URI: https://github.com/Seravo/wp-pdf-templates
  * Description: This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Seravo Oy
  * Author URI: http://seravo.fi
  * License: GPLv3
@@ -206,12 +206,19 @@ function _use_pdf_template() {
 
       if( defined('FETCH_COOKIES_ENABLED') && FETCH_COOKIES_ENABLED ) {
 
-        // do the request using cookies provided
+        // we want a html template
+        $header = 'Accept:text/html' . "\n";
+
+        // pass cookies from current request
+        if( isset( $_SERVER['HTTP_COOKIE'] ) ) {
+          $header .= 'Cookie: ' . $_SERVER['HTTP_COOKIE'] . "\n";
+        }
+
+        // create a request context for file_get_contents
         $context = stream_context_create(array(
           'http' => array(
             'method' => 'GET',
-            'header' => 'Accept:text/html' . "\n" .
-                        'Cookie: ' . $_SERVER['HTTP_COOKIE'],
+            'header' => $header,
           )
         ));
 
