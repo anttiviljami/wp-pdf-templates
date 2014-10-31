@@ -312,7 +312,7 @@ function _print_pdf($html) {
     $request_headers = _get_request_headers();
 
     // check if we need to generate PDF against cache
-    if($request_headers['Cache-Control'] == 'no-cache' || $request_headers['Pragma'] == 'no-cache' || !file_exists($cached) || (defined('DISABLE_PDF_CACHE') && DISABLE_PDF_CACHE)) {
+    if((array_key_exists('Cache-Control', $request_headers) && $request_headers['Cache-Control'] == 'no-cache') || (array_key_exists('Pragma', $request_headers) && $request_headers['Pragma'] == 'no-cache') || !file_exists($cached) || (defined('DISABLE_PDF_CACHE') && DISABLE_PDF_CACHE)) {
 
       // we may need more than 30 seconds execution time
       set_time_limit(60);
