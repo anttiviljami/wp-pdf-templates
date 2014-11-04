@@ -3,7 +3,7 @@
  * Plugin Name: Wordpress PDF Templates
  * Plugin URI: https://github.com/Seravo/wp-pdf-templates
  * Description: This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
- * Version: 1.3.7
+ * Version: 1.3.8
  * Author: Seravo Oy
  * Author URI: http://seravo.fi
  * License: GPLv3
@@ -309,10 +309,9 @@ function _print_pdf($html) {
 
     $filename = get_the_title() . '.pdf';
     $cached = PDF_CACHE_DIRECTORY . get_the_title() . '-' . substr(md5(get_the_modified_time()), -6) . '.pdf';
-    $request_headers = _get_request_headers();
 
     // check if we need to generate PDF against cache
-    if((array_key_exists('Cache-Control', $request_headers) && $request_headers['Cache-Control'] == 'no-cache') || (array_key_exists('Pragma', $request_headers) && $request_headers['Pragma'] == 'no-cache') || !file_exists($cached) || (defined('DISABLE_PDF_CACHE') && DISABLE_PDF_CACHE)) {
+    if(( defined('DISABLE_PDF_CACHE') && DISABLE_PDF_CACHE ) || ( isset($_SERVER['HTTP_PRAGMA']) && $_SERVER['HTTP_PRAGMA'] == 'no-cache' ) || !file_exists($cached) ) {
 
       // we may need more than 30 seconds execution time
       set_time_limit(60);
@@ -361,17 +360,4 @@ function _print_pdf($html) {
   // kill php after output is complete
   die();
 
-}
-
-/*
- * Gets any request headers passed to the script
- */
-function _get_request_headers() {
-  $headers = '';
-  foreach ($_SERVER as $name => $value) {
-    if (substr($name, 0, 5) == 'HTTP_') {
-      $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
-    }
-  }
-  return $headers;
 }
