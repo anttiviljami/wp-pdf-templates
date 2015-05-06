@@ -3,7 +3,7 @@
  * Plugin Name: Wordpress PDF Templates
  * Plugin URI: https://github.com/Seravo/wp-pdf-templates
  * Description: This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
- * Version: 1.3.8
+ * Version: 1.3.9
  * Author: Seravo Oy
  * Author URI: http://seravo.fi
  * License: GPLv3
@@ -11,7 +11,7 @@
 
 
 /**
- * Copyright 2014 Seravo Oy
+ * Copyright 2015 Seravo Oy
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 3, as
@@ -48,12 +48,12 @@
  * For further information see readme.txt
  */
 
-/*
+/**
  * Track plugin version number
  */
-define('WP_PDF_TEMPLATES_VERSION', '1.3.5');
+define('WP_PDF_TEMPLATES_VERSION', '1.3.9');
 
-/*
+/**
  * Option to disable PDF caching
  *
  * This can be used for rapidly changing content that's uncacheable, such as
@@ -62,7 +62,7 @@ define('WP_PDF_TEMPLATES_VERSION', '1.3.5');
 //define('DISABLE_PDF_CACHE', true);
 
 
-/*
+/**
  * Option to enable cookies on fetching the PDF template HTML.
  *
  * This might be useful if the content or access to it depends on browser
@@ -72,22 +72,23 @@ define('WP_PDF_TEMPLATES_VERSION', '1.3.5');
 //define('FETCH_COOKIES_ENABLED', true);
 
 
-/*
+/**
  * Set PDF file cache directory
  */
 $upload_dir = wp_upload_dir();
-if (!defined('PDF_CACHE_DIRECTORY'))
+if (!defined('PDF_CACHE_DIRECTORY')) {
   define('PDF_CACHE_DIRECTORY', $upload_dir['basedir'] . '/pdf-cache/');
+}
 
 
-/*
+/**
  * Allow remote assets in docs
  */
 if (!defined('DOMPDF_ENABLE_REMOTE'))
   define('DOMPDF_ENABLE_REMOTE', true);
 
 
-/*
+/**
  * Redefine font directories
  */
 if (!defined('DOMPDF_FONT_DIR'))
@@ -97,7 +98,7 @@ if (!defined('DOMPDF_FONT_CACHE'))
   define('DOMPDF_FONT_CACHE', $upload_dir['basedir'] . '/dompdf-fonts/');
 
 
-/*
+/**
  * This function can be used to set PDF print support for custom post types.
  * Takes an array of post types (strings) as input. See defaults below.
  */
@@ -111,13 +112,13 @@ function set_pdf_print_support($post_types) {
   }
 }
 
-/*
+/**
  * Default post types supported are post and page
  */
 set_pdf_print_support(array('post', 'page'));
 
 
-/*
+/**
  * Adds rewrite rules for printing if using pretty permalinks
  */
 add_action('init', '_pdf_rewrite');
@@ -127,7 +128,7 @@ function _pdf_rewrite() {
   add_rewrite_endpoint('pdf-template', EP_ALL);
 }
 
-/*
+/**
  * Registers print endpoints
  */
 add_filter('query_vars', '_get_pdf_query_vars');
@@ -138,7 +139,7 @@ function _get_pdf_query_vars($query_vars) {
   return $query_vars;
 }
 
-/*
+/**
  * Flushes the rewrite rules on plugin activation and deactivation
  */
 register_activation_hook(__FILE__, '_flush_pdf_rewrite_rules');
@@ -151,7 +152,7 @@ function _flush_pdf_rewrite_rules() {
   $wp_rewrite->flush_rules(false);
 }
 
-/*
+/**
  * Creates a directory for any new fonts the user may upload
  */
 register_activation_hook(__FILE__, '_init_dompdf_fonts');
@@ -169,7 +170,7 @@ function _init_dompdf_fonts() {
   }
 }
 
-/*
+/**
  * Applies print templates
  */
 add_action('template_redirect', '_use_pdf_template');
@@ -242,7 +243,7 @@ function _use_pdf_template() {
   }
 }
 
-/*
+/**
  * Locates the theme pdf template file to be used
  */
 function _locate_pdf_template($template) {
@@ -250,6 +251,8 @@ function _locate_pdf_template($template) {
   // locate proper template file
   // NOTE: this only works if the standard template file exists as well
   // i.e. to use single-product-pdf.php you must also have single-product.php
+
+  // @TODO: Utilise a template wrapper like this one: https://roots.io/sage/docs/theme-wrapper/
   $pdf_template = str_replace('.php', '-pdf.php', basename($template));
 
   if(file_exists(get_stylesheet_directory() . '/' . $pdf_template)) {
@@ -275,7 +278,7 @@ function _locate_pdf_template($template) {
 }
 
 
-/*
+/**
  * Removes all scripts and stylesheets
  */
 function _remove_dep_arrays() {
@@ -284,7 +287,7 @@ function _remove_dep_arrays() {
 }
 
 
-/*
+/**
  * Filters the html generated from the template for printing
  */
 add_filter('pdf_template_html', '_process_pdf_template_html');
@@ -298,7 +301,7 @@ function _process_pdf_template_html($html) {
 }
 
 
-/*
+/**
  * Handles the PDF Conversion
  */
 function _print_pdf($html) {
@@ -344,7 +347,7 @@ function _print_pdf($html) {
 
     //read and display the cached file
     header('Content-type: application/pdf');
-    header('Content-Disposition: inline; filename="' . $filename . '"');
+	header('Content-Disposition: inline; filename="' . $filename . '"');
     header('Content-Transfer-Encoding: binary');
     header('Content-Length: ' . filesize($cached));
     header('Accept-Ranges: bytes');
@@ -361,3 +364,4 @@ function _print_pdf($html) {
   die();
 
 }
+

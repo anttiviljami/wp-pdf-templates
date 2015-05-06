@@ -2,9 +2,9 @@
 Contributors: Zuige, ottok
 Tags: pdf, dompdf, templates, print, seravo
 Donate link: http://seravo.fi/
-Requires at least: 3.8.0
-Tested up to: 4.0
-Stable tag: 1.3.8
+Requires at least: 3.8.7
+Tested up to: 4.2.1
+Stable tag: 1.3.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -37,11 +37,11 @@ Wordpress PDF Templates works quietly in the backround without cluttering your w
 
 To see this plugin in action, try navigating to any post or page on your site and appending /pdf/ to the URL.
 
-= I don't like the way my PDF printing looks. How do I change it? =
+= My PDF is displaying the wrong post content =
 
-Just copy index-pdf.php from wp-content/plugins/wp-pdf-templates/ into your theme directory and start editing!
+Is your content access-restricted? In that case, all you need to do is enable cookies for the plugin with `define('FETCH_COOKIES_ENABLED', true);` in your wp-config.php
 
-If you wish to define different templates for different post types, you can do that too! Let's say you wish to create a new PDF template for pages. Just create a file called 'page-pdf.php' and create your template there. Note that this only works when a page.php exists in your theme.
+You can also try clearing the PDF cache by hard-refreshing your browser or disabling the PDF cache altogether with `define( 'DISABLE_PDF_CACHE', true )`
 
 = How do I enable PDF Templates for custom post types? =
 
@@ -54,6 +54,12 @@ Example:
 if(function_exists('set_pdf_print_support')) {
   set_pdf_print_support(array('post', 'page', 'product'));
 }`
+
+= I don't like the way my PDF printing looks. How do I change it? =
+
+Just copy index-pdf.php from wp-content/plugins/wp-pdf-templates/ into your theme directory and start editing!
+
+If you wish to define different templates for different post types, you can do that too! Let's say you wish to create a new PDF template for pages. Just create a file called 'page-pdf.php' and create your template there. Note that this only works when a page.php exists in your theme.
 
 = Can I change the PDF output paper size, orientation or DPI? =
 
@@ -76,6 +82,9 @@ DOMPDF needs the proper font files to generate PDF files. There's a font adder u
 1. See example use of this plugin here: http://vetrospace.com/
 
 == Changelog ==
+
+= 1.3.9 =
+* Just marking compatibility and small cleanup
 
 = 1.3.7 =
 * Cookies are now passed as a raw header for a simpler system
