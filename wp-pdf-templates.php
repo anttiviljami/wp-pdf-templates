@@ -347,7 +347,7 @@ function _print_pdf($html) {
 
     //read and display the cached file
     header('Content-type: application/pdf');
-	header('Content-Disposition: inline; filename="' . $filename . '"');
+    header('Content-Disposition: inline; filename="' . $filename . '"');
     header('Content-Transfer-Encoding: binary');
     header('Content-Length: ' . filesize($cached));
     header('Accept-Ranges: bytes');
