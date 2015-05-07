@@ -219,10 +219,8 @@ function _use_pdf_template() {
         
         // store the cookies
         $cookies = array();
-        foreach ($_COOKIE as $key => $value)
-        {
-            if ($key != 'Array')
-            {
+        foreach ($_COOKIE as $key => $value) {
+            if ($key != 'Array') {
                 $cookies[] = $key . '=' . $value;
             }
         }
@@ -243,7 +241,7 @@ function _use_pdf_template() {
         
         // extract cookies form curl and forward them to browser
         preg_match_all('/^(Set-Cookie:\s*[^\n]*)$/mi', $header, $cookies);
-        foreach($cookies[0] AS $cookie){
+        foreach($cookies[0] AS $cookie) {
           header($cookie, false);
         }
        
