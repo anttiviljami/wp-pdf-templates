@@ -207,47 +207,47 @@ function _use_pdf_template() {
 
       if( defined('FETCH_COOKIES_ENABLED') && FETCH_COOKIES_ENABLED ) {
 
-		$url =  $link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template';
-		$ch = curl_init();
-		
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		
-		// get http headers for cookies
-		curl_setopt($ch, CURLOPT_VERBOSE, 1);
-		curl_setopt($ch, CURLOPT_HEADER, 1);
-		
-		// store the cookies
-		$cookies = array();
-		foreach ($_COOKIE as $key => $value)
-		{
-			if ($key != 'Array')
-			{
-				$cookies[] = $key . '=' . $value;
-			}
-		}
-		// add the cookies to the request
-		curl_setopt( $ch, CURLOPT_COOKIE, implode(';', $cookies) );
-		
-		// Stop session so curl can use the same session without conflicts
-		session_write_close();
-		
-		$response = curl_exec($ch);
-		curl_close($ch);
-		
-		// Session restart
-		session_start();
-		
-		// Seperate header and body
-		list($header, $body) = explode("\r\n\r\n", $response, 2);
-		
-		// extract cookies form curl and forward them to browser
-		preg_match_all('/^(Set-Cookie:\s*[^\n]*)$/mi', $header, $cookies);
-		foreach($cookies[0] AS $cookie){
-		  header($cookie, false);
-		}
-	   
-		$html = $body;
+        $url =  $link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template';
+        $ch = curl_init();
+        
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        // get http headers for cookies
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        
+        // store the cookies
+        $cookies = array();
+        foreach ($_COOKIE as $key => $value)
+        {
+            if ($key != 'Array')
+            {
+                $cookies[] = $key . '=' . $value;
+            }
+        }
+        // add the cookies to the request
+        curl_setopt( $ch, CURLOPT_COOKIE, implode(';', $cookies) );
+        
+        // Stop session so curl can use the same session without conflicts
+        session_write_close();
+        
+        $response = curl_exec($ch);
+        curl_close($ch);
+        
+        // Session restart
+        session_start();
+        
+        // Seperate header and body
+        list($header, $body) = explode("\r\n\r\n", $response, 2);
+        
+        // extract cookies form curl and forward them to browser
+        preg_match_all('/^(Set-Cookie:\s*[^\n]*)$/mi', $header, $cookies);
+        foreach($cookies[0] AS $cookie){
+          header($cookie, false);
+        }
+       
+        $html = $body;
       }
 
       else {
