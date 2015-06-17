@@ -1,0 +1,27 @@
+{
+  "name": "seravo/wp-pdf-templates",
+  "type": "wordpress-plugin",
+  "license": "GPLv3",
+  "description": "This plugin creates a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.",
+  "homepage": "https://github.com/Seravo/wp-pdf-templates",
+  "authors": [
+    {
+      "name": "Antti Kuosmanen",
+      "email": "antti@seravo.fi",
+      "homepage": "https://github.com/anttiviljami"
+    },
+    {
+      "name": "Otto Kekäläinen",
+      "email": "otto@seravo.fi",
+      "homepage": "https://github.com/ottok"
+    },
+    {
+      "name": "Onni Hakala",
+      "email": "onni@seravo.fi",
+      "homepage": "https://github.com/onnimonni"
+    }
+  ],
+  "keywords": [
+    "wordpress","pdf", "template", "endpoint"
+  ]
+}
