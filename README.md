@@ -1,4 +1,4 @@
-Custom Bulk Actions
+Wordpress PDF Templates
 ===================
 [![Build Status](https://travis-ci.org/Seravo/wp-pdf-templates.svg?branch=master)](https://travis-ci.org/Seravo/wp-pdf-templates)
 
