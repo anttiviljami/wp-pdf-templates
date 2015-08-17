@@ -201,36 +201,45 @@ function _use_pdf_template() {
     }
 
     // our post permalink
-    $link = get_the_permalink();
+    $url = parse_url(get_the_permalink());
+
+    // we use localhost to make sure we're requesting the page from this wordpress instance
+    $link = $url['scheme'] . '://localhost' . $url['path'];
+    $link = $link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template';
 
     if(isset($wp_query->query_vars['pdf']) || isset($wp_query->query_vars['pdf-preview'])) {
 
+      // we want a html template
+      $header = 'Accept:text/html' . "\n";
+
+      // since we're always requesting this from localhost, we need to set the Host
+      // header for WordPress to route our request correctly
+      $header = 'Host:' . $url['host'] . "\n";
+
       if( defined('FETCH_COOKIES_ENABLED') && FETCH_COOKIES_ENABLED ) {
-
-        // we want a html template
-        $header = 'Accept:text/html' . "\n";
-
         // pass cookies from current request
         if( isset( $_SERVER['HTTP_COOKIE'] ) ) {
           $header .= 'Cookie: ' . $_SERVER['HTTP_COOKIE'] . "\n";
         }
-
-        // create a request context for file_get_contents
-        $context = stream_context_create(array(
-          'http' => array(
-            'method' => 'GET',
-            'header' => $header,
-          )
-        ));
-
-        // load the generated html from the template endpoint
-        $html = file_get_contents($link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template', false, $context);
       }
 
-      else {
-        // request without cookies
-        $html = file_get_contents($link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template');
-      }
+      // create a request context for file_get_contents
+      $context = stream_context_create(array(
+        'http' => array(
+          'method' => 'GET',
+          'header' => $header,
+        ),
+        'ssl' => array(
+          'verify_peer' => false, // since we're using localhost, HTTPS doesn't need peer verification
+          'verify_peer_name' => false,
+        ),
+      ));
+
+      // load the generated html from the template endpoint
+      $html = file_get_contents($link, false, $context);
+
+    /*print_r($link);
+    die();*/
 
       // process the html output
       $html = apply_filters('pdf_template_html', $html);
@@ -317,7 +326,7 @@ function _print_pdf($html) {
     if(( defined('DISABLE_PDF_CACHE') && DISABLE_PDF_CACHE ) || ( isset($_SERVER['HTTP_PRAGMA']) && $_SERVER['HTTP_PRAGMA'] == 'no-cache' ) || !file_exists($cached) ) {
 
       // we may need more than 30 seconds execution time
-      set_time_limit(60);
+      //set_time_limit(60);
 
       // include the library
       require_once plugin_dir_path(__FILE__) . 'dompdf/dompdf_config.inc.php';
