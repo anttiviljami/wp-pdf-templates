@@ -87,6 +87,12 @@ if (!defined('PDF_CACHE_DIRECTORY')) {
 if (!defined('DOMPDF_ENABLE_REMOTE'))
   define('DOMPDF_ENABLE_REMOTE', true);
 
+/**
+ * Allow remote assets in docs
+ */
+if (!defined('DOMPDF_ENABLE_HTML5'))
+  define('DOMPDF_ENABLE_HTML5', true);
+
 
 /**
  * Redefine font directories
@@ -158,13 +164,13 @@ function _flush_pdf_rewrite_rules() {
 register_activation_hook(__FILE__, '_init_dompdf_fonts');
 function _init_dompdf_fonts() {
   // copy DOMPDF fonts to wp-content/dompdf-fonts/
-  require_once "dompdf/dompdf_config.custom.inc.php";
+  require_once "vendor/autoload.php";
   if(!is_dir(DOMPDF_FONT_DIR)) {
     @mkdir(DOMPDF_FONT_DIR);
   }
   if(!file_exists(DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php')) {
     copy(
-      dirname(__FILE__) . '/dompdf/lib/fonts/dompdf_font_family_cache.dist.php',
+      dirname(__FILE__) . 'vendor/dompdf/dompdf/lib/fonts/dompdf_font_family_cache.dist.php',
       DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php'
       );
   }
@@ -329,15 +335,30 @@ function _print_pdf($html) {
       //set_time_limit(60);
 
       // include the library
-      require_once plugin_dir_path(__FILE__) . 'dompdf/dompdf_config.inc.php';
+      require_once 'vendor/autoload.php';
 
       // html to pdf conversion
-      $dompdf = new DOMPDF();
-      $dompdf->set_paper(
+      $dompdf = new Dompdf\Dompdf();
+
+      $dompdf->setPaper(
         defined('DOMPDF_PAPER_SIZE') ? DOMPDF_PAPER_SIZE : DOMPDF_DEFAULT_PAPER_SIZE,
         defined('DOMPDF_PAPER_ORIENTATION') ? DOMPDF_PAPER_ORIENTATION : 'portrait');
-      $dompdf->load_html($html);
-      $dompdf->set_base_path(get_stylesheet_directory_uri());
+
+      $options = $dompdf->getOptions();
+      $options->set(array(
+	    'fontDir' => DOMPDF_FONT_DIR,
+	    'fontCache' => DOMPDF_FONT_CACHE,
+        'isHtml5ParserEnabled' => DOMPDF_ENABLE_HTML5,
+        'isRemoteEnabled' => DOMPDF_ENABLE_REMOTE,
+      ));
+
+	  // allow setting a different DPI value
+      if( defined('DOMPDF_DPI') ) $options->set(array('dpi' => DOMPDF_DPI));
+
+      $dompdf->setOptions($options);
+
+      $dompdf->loadHtml($html);
+      //$dompdf->setBasePath(get_stylesheet_directory_uri());
       $dompdf->render();
 
       if(defined('DISABLE_PDF_CACHE') && DISABLE_PDF_CACHE) {
