@@ -346,16 +346,19 @@ function _print_pdf($html) {
 
       $options = $dompdf->getOptions();
       $options->set(array(
-	    'fontDir' => DOMPDF_FONT_DIR,
-	    'fontCache' => DOMPDF_FONT_CACHE,
+        'fontDir' => DOMPDF_FONT_DIR,
+        'fontCache' => DOMPDF_FONT_CACHE,
         'isHtml5ParserEnabled' => DOMPDF_ENABLE_HTML5,
         'isRemoteEnabled' => DOMPDF_ENABLE_REMOTE,
       ));
 
-	  // allow setting a different DPI value
+      // allow setting a different DPI value
       if( defined('DOMPDF_DPI') ) $options->set(array('dpi' => DOMPDF_DPI));
 
       $dompdf->setOptions($options);
+
+      // allow other plugins to filter the html before passing it to dompdf
+      $html = apply_filters('pdf_html_to_dompdf', $html);
 
       $dompdf->loadHtml($html);
       //$dompdf->setBasePath(get_stylesheet_directory_uri());
