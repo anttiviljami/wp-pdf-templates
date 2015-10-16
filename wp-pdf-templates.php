@@ -223,6 +223,14 @@ function _use_pdf_template() {
       $header = 'Host:' . $url['host'] . "\n";
 
       if( defined('FETCH_COOKIES_ENABLED') && FETCH_COOKIES_ENABLED ) {
+
+        // unlock the session file if a session exists
+        if ( !empty( session_id() )) ) {
+          session_write_close(); // you can't have two parallel php heaps with the same session id
+          // we don't need the session after this point anyway so it should be fine
+          // the file_get_contents heap will have its own session and do whatever it needs to
+        }
+
         // pass cookies from current request
         if( isset( $_SERVER['HTTP_COOKIE'] ) ) {
           $header .= 'Cookie: ' . $_SERVER['HTTP_COOKIE'] . "\n";
