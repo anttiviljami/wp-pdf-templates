@@ -324,9 +324,9 @@ function _print_pdf($html) {
 
   if (isset($wp_query->query_vars['pdf'])) {
     // convert to PDF
-
-    $filename = get_the_title() . '.pdf';
-    $cached = PDF_CACHE_DIRECTORY . get_the_title() . '-' . substr(md5(get_the_modified_time()), -6) . '.pdf';
+    $title = wp_strip_all_tags(get_the_title());
+    $filename = $title . '.pdf';
+    $cached = PDF_CACHE_DIRECTORY . $title . '-' . substr(md5(get_the_modified_time()), -6) . '.pdf';
 
     // check if we need to generate PDF against cache
     if(( defined('DISABLE_PDF_CACHE') && DISABLE_PDF_CACHE ) || ( isset($_SERVER['HTTP_PRAGMA']) && $_SERVER['HTTP_PRAGMA'] == 'no-cache' ) || !file_exists($cached) ) {
