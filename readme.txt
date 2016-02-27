@@ -2,9 +2,9 @@
 Contributors: Zuige
 Tags: pdf, dompdf, templates, print, seravo
 Donate link: http://seravo.fi/
-Requires at least: 3.8.7
-Tested up to: 4.4.1
-Stable tag: 1.3.9
+Requires at least: 4.0
+Tested up to: 4.4.2
+Stable tag: 1.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -82,6 +82,9 @@ DOMPDF needs the proper font files to generate PDF files. There's a font adder u
 1. See example use of this plugin here: http://vetrospace.com/
 
 == Changelog ==
+
+= 1.4.0
+* Updated to newest version of DOMPDF, attribute plugin to @anttiviljami instead of Seravo
 
 = 1.3.9 =
 * Just marking compatibility and small cleanup
