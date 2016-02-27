@@ -27,3 +27,7 @@ You can also install the plugin by directly uploading the zip file as instructed
 2. Upload to the plugin to /wp-content/plugins/ via the WordPress plugin uploader or your preferred method
 3. Activate the plugin
 
+## Screenshots
+
+### Plugin used on the Vetrospace.com website
+[![Vetrospace](/assets/screenshot-1.png)](https://vetrospace.com)
