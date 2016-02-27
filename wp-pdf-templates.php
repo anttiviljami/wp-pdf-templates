@@ -9,7 +9,6 @@
  * License: GPLv3
 */
 
-
 /**
  * Copyright 2015-2016 Antti Kuosmanen
  *
@@ -26,7 +25,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
 
 /**
  * WordPress PDF Templates
@@ -242,10 +240,12 @@ function _use_pdf_template() {
       ));
 
       // load the generated html from the template endpoint
-      $html = file_get_contents($link, false, $context);
+      $html = file_get_contents( $link, false, $context );
 
-    /*print_r($link);
-    die();*/
+      if( empty( $html ) ) {
+        // sometimes the ssl module just fails, fall back to http insted
+        $html = file_get_contents( str_ireplace( 'https://', 'http://', $link ), false, $context );
+      }
 
       // process the html output
       $html = apply_filters('pdf_template_html', $html);
