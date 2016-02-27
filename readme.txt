@@ -1,5 +1,5 @@
-=== Wordpress PDF Templates ===
-Contributors: zuige, ottok
+=== WordPress PDF Templates ===
+Contributors: Zuige
 Tags: pdf, dompdf, templates, print, seravo
 Donate link: http://seravo.fi/
 Requires at least: 3.8.7
@@ -12,7 +12,7 @@ This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/
 
 == Description ==
 
-Wordpress PDF Templates
+WordPress PDF Templates
 
 This plugin utilises the DOMPDF Library to provide a simple URL endpoint e.g. http://my-site.com/my-post/pdf/ that generates a downloadable PDF file.
 
@@ -33,7 +33,7 @@ Source available at https://github.com/Seravo/wp-pdf-templates
 
 = I activated the plugin but can't see any difference. What do I do? =
 
-Wordpress PDF Templates works quietly in the backround without cluttering your wp-admin with unnecessary menus and views.
+WordPress PDF Templates works quietly in the backround without cluttering your wp-admin with unnecessary menus and views.
 
 To see this plugin in action, try navigating to any post or page on your site and appending /pdf/ to the URL.
 
@@ -49,7 +49,7 @@ You can define supported post types in your theme functions.php with `set_pdf_pr
 
 The set_pdf_print_support function takes an array of post types (strings) as a parameter.
 
-Example: 
+Example:
 `// add pdf print support to post type 'product'
 if(function_exists('set_pdf_print_support')) {
   set_pdf_print_support(array('post', 'page', 'product'));
@@ -65,7 +65,7 @@ If you wish to define different templates for different post types, you can do t
 
 Yes! You can define settings for the DOMPDF Library by editing your wp-config.php.
 
-Example: 
+Example:
 `// use landscape A4 sized paper @ 180 DPI
 define('DOMPDF_PAPER_SIZE', 'A4');
 define('DOMPDF_PAPER_ORIENTATION', 'landscape');
@@ -77,7 +77,7 @@ See DOMPDF documentation for more options.
 
 DOMPDF needs the proper font files to generate PDF files. There's a font adder utility built in to DOMPDF you can use to import any TrueType fonts. See this link for instructions: https://code.google.com/p/dompdf/wiki/Installation
 
-== Screenshots == 
+== Screenshots ==
 
 1. See example use of this plugin here: http://vetrospace.com/
 
@@ -118,4 +118,4 @@ DOMPDF needs the proper font files to generate PDF files. There's a font adder u
 == Upgrade Notice ==
 
 = 1.0 =
-Please upgrade Wordpress PDF Templates to the newest version. It won't break anything. Promise!
+Please upgrade WordPress PDF Templates to the newest version. It won't break anything. Promise!

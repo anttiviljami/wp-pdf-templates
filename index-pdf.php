@@ -1,8 +1,8 @@
 <?php
 /**
  * Filename: index-pdf.php
- * Project: Wordpress PDF Templates
- * Copyright: (c) 2014-2016 Seravo Oy
+ * Project: WordPress PDF Templates
+ * Copyright: (c) 2014-2016 Antti Kuosmanen
  * License: GPLv3
  *
  * Copy this file to your theme directory to start customising the PDF template.

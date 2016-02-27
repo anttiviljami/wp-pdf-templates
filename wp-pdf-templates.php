@@ -1,17 +1,17 @@
 <?php
 /**
- * Plugin Name: Wordpress PDF Templates
- * Plugin URI: https://github.com/Seravo/wp-pdf-templates
+ * Plugin Name: WordPress PDF Templates
+ * Plugin URI: https://github.com/anttiviljami/wp-pdf-templates
  * Description: This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
  * Version: 1.3.9
- * Author: Seravo Oy
- * Author URI: http://seravo.fi
+ * Author: @anttiviljami
+ * Author URI: https://github.com/anttiviljami
  * License: GPLv3
 */
 
 
 /**
- * Copyright 2015-2016 Seravo Oy
+ * Copyright 2015-2016 Antti Kuosmanen
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 3, as
@@ -29,7 +29,7 @@
 
 
 /**
- * Wordpress PDF Templates
+ * WordPress PDF Templates
  *
  * This plugin utilises the DOMPDF Library to provide a simple URL endpoint
  * e.g. http://my-site.com/my-post/pdf/ that generates a downloadable PDF file.

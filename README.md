@@ -1,30 +1,28 @@
-Wordpress PDF Templates
-===================
-[![Build Status](https://travis-ci.org/Seravo/wp-pdf-templates.svg?branch=master)](https://travis-ci.org/Seravo/wp-pdf-templates)
+# WordPress PDF Templates
 
-This plugin creates a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
+This plugin creates a URL endpoint for WordPress e.g. /my-post/pdf/ that generates a downloadable PDF file.
 
 ## Installation
-Available for installation via [Wordpress.org](https://wordpress.org/plugins/wp-pdf-templates/), [Composer via Packagist](https://packagist.org/packages/seravo/wp-pdf-templates) or [GitHub Plugin Search](https://github.com/brainstormmedia/github-plugin-search).
 
-Manual installation steps with Git:
+### The Composer Way (preferred)
 
-Step 1: Clone this repository to your plugins directory
-
+Install the plugin via [Composer](https://getcomposer.org/)
 ```
-git clone https://github.com/Seravo/wp-pdf-templates.git
+composer require anttiviljami/wp-pdf-templates
 ```
 
-Step 2: Run a composer install from the command line in the plugin directory
-
-```
-composer install
-```
-
-Step 3: Activate the plugin from WordPress and you're done.
-
+Activate the plugin
 ```
 wp plugin activate wp-pdf-templates
 ```
 
-For more information see **readme.txt**.
+### The Old Fashioned Way
+
+This plugin is available on the [official WordPress.org plugin directory](https://wordpress.org/plugins/wp-pdf-templates/).
+
+You can also install the plugin by directly uploading the zip file as instructed below:
+
+1. [Download the plugin](https://github.com/anttiviljami/wp-pdf-templates/archive/master.zip)
+2. Upload to the plugin to /wp-content/plugins/ via the WordPress plugin uploader or your preferred method
+3. Activate the plugin
+

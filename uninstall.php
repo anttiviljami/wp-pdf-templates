@@ -1,15 +1,10 @@
 <?php
 /**
- * Filename: uninstall.php
- * Project: Wordpress PDF Templates
- * Copyright: (c) 2014-2016 Seravo Oy
- * License: GPLv3
- *
- * This file gets called when the plugin is uninstalled from Wordpress.
+ * This file gets called when the plugin is uninstalled from WordPress.
 */
 
 /*
- * If not called by Wordpress, do nothing
+ * If not called by WordPress, do nothing
  */
 if (!defined('WP_UNINSTALL_PLUGIN')) {
   exit();
