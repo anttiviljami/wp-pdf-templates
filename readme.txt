@@ -22,7 +22,7 @@ The PDF output can be customized by copying the index-pdf.php file from the plug
 
 Stylesheets used on the site are disabled by default, but you can define your own stylesheets within the pdf-template.php file. PDF Templates can be previewed as raw HTML at the /pdf-preview URL endpoint.
 
-Source available at https://github.com/Seravo/wp-pdf-templates
+Source available at https://github.com/anttiviljami/wp-pdf-templates
 
 == Installation ==
 

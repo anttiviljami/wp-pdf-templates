@@ -247,6 +247,12 @@ function _use_pdf_template() {
         $html = file_get_contents( str_ireplace( 'https://', 'http://', $link ), false, $context );
       }
 
+      if( empty( $html ) ) {
+        // if all else fails, try the public site url (not localhost)
+        $link = get_the_permalink();
+        $link = $link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template';
+        $html = file_get_contents( $link , false, $context );
+      }
       // process the html output
       $html = apply_filters('pdf_template_html', $html);
 
