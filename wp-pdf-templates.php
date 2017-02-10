@@ -332,7 +332,7 @@ function _print_pdf($html) {
     // convert to PDF
 
     $title_sanitized = sanitize_file_name( get_the_title() );
-    $cached = PDF_CACHE_DIRECTORY . get_the_title() . '-' . substr(md5(get_the_modified_time()), -6) . '.pdf';		+    $filename = $title_sanitized . '.pdf';
+    $filename = $title_sanitized . '.pdf';
     $cached = PDF_CACHE_DIRECTORY . $title_sanitized . '-' . substr(md5(get_the_modified_time()), -6) . '.pdf';
 
     // check if we need to generate PDF against cache
