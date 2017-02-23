@@ -231,17 +231,17 @@
     },
     {
         "name": "dompdf/dompdf",
-        "version": "dev-develop",
-        "version_normalized": "dev-develop",
+        "version": "v0.8.0",
+        "version_normalized": "0.8.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/dompdf/dompdf.git",
-            "reference": "d090f5eb9191c3a2fd7d304c85fc5a1c7e04bd95"
+            "reference": "0f418c6b58fdeafc2a0e80eb1fa5e644e185089c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/dompdf/dompdf/zipball/d090f5eb9191c3a2fd7d304c85fc5a1c7e04bd95",
-            "reference": "d090f5eb9191c3a2fd7d304c85fc5a1c7e04bd95",
+            "url": "https://api.github.com/repos/dompdf/dompdf/zipball/0f418c6b58fdeafc2a0e80eb1fa5e644e185089c",
+            "reference": "0f418c6b58fdeafc2a0e80eb1fa5e644e185089c",
             "shasum": ""
         },
         "require": {
@@ -256,7 +256,7 @@
             "phpunit/phpunit": "4.8.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2017-02-15T04:22:22+00:00",
+        "time": "2017-02-16T02:40:40+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

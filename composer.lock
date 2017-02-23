@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a3d8c157b25aa1b2adeeedb88c723551",
+    "content-hash": "8b582b4ed06960f287ccb373f68e77ec",
     "packages": [
         {
             "name": "composer/installers",
@@ -115,16 +115,16 @@
         },
         {
             "name": "dompdf/dompdf",
-            "version": "dev-develop",
+            "version": "v0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dompdf/dompdf.git",
-                "reference": "d090f5eb9191c3a2fd7d304c85fc5a1c7e04bd95"
+                "reference": "0f418c6b58fdeafc2a0e80eb1fa5e644e185089c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/d090f5eb9191c3a2fd7d304c85fc5a1c7e04bd95",
-                "reference": "d090f5eb9191c3a2fd7d304c85fc5a1c7e04bd95",
+                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/0f418c6b58fdeafc2a0e80eb1fa5e644e185089c",
+                "reference": "0f418c6b58fdeafc2a0e80eb1fa5e644e185089c",
                 "shasum": ""
             },
             "require": {
@@ -173,7 +173,7 @@
             ],
             "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
             "homepage": "https://github.com/dompdf/dompdf",
-            "time": "2017-02-15 04:22:22"
+            "time": "2017-02-16T02:40:40+00:00"
         },
         {
             "name": "phenx/php-font-lib",
@@ -294,9 +294,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "dompdf/dompdf": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
