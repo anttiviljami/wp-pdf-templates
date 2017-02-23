@@ -16,6 +16,6 @@
   ],
   "require": {
     "composer/installers": "~1.0",
-    "dompdf/dompdf": "dev-develop"
+    "dompdf/dompdf": "0.8.*"
   }
 }
