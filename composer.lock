@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b582b4ed06960f287ccb373f68e77ec",
+    "content-hash": "317f7a07f95cc1791ee703bca9a50a9e",
     "packages": [
         {
             "name": "composer/installers",
@@ -115,7 +115,7 @@
         },
         {
             "name": "dompdf/dompdf",
-            "version": "v0.8.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dompdf/dompdf.git",
@@ -173,7 +173,7 @@
             ],
             "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
             "homepage": "https://github.com/dompdf/dompdf",
-            "time": "2017-02-16T02:40:40+00:00"
+            "time": "2017-02-16 02:40:40"
         },
         {
             "name": "phenx/php-font-lib",
@@ -294,7 +294,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "dompdf/dompdf": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
