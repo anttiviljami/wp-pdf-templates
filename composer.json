@@ -1,5 +1,5 @@
 {
-  "name": "blueoceanideas/wp-pdf-templates",
+  "name": "anttiviljami/wp-pdf-templates",
   "type": "wordpress-plugin",
   "license": "GPLv3",
   "description": "This plugin creates a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.",
