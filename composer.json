@@ -15,6 +15,7 @@
     "wordpress", "pdf", "template", "endpoint"
   ],
   "require": {
-    "composer/installers": "~1.0"
+    "composer/installers": "~1.0",
+    "dompdf/dompdf": "0.8.*"
   }
 }
