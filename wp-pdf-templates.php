@@ -350,6 +350,7 @@ function _print_pdf($html) {
       //set_time_limit(60);
 
       // include the library
+      require_once 'dompdf/autoload.inc.php';
       require_once 'vendor/autoload.php';
 
       // html to pdf conversion
@@ -412,4 +413,3 @@ function _print_pdf($html) {
   die();
 
 }
-
