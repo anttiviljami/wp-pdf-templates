@@ -159,20 +159,20 @@ function _flush_pdf_rewrite_rules() {
 /**
  * Creates a directory for any new fonts the user may upload
  */
-register_activation_hook(__FILE__, '_init_dompdf_fonts');
-function _init_dompdf_fonts() {
-  // copy DOMPDF fonts to wp-content/dompdf-fonts/
-  require_once "vendor/autoload.php";
-  if(!is_dir(DOMPDF_FONT_DIR)) {
-    @mkdir(DOMPDF_FONT_DIR);
-  }
-  if(!file_exists(DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php')) {
-    copy(
-      dirname(__FILE__) . 'vendor/dompdf/dompdf/lib/fonts/dompdf_font_family_cache.dist.php',
-      DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php'
-      );
-  }
-}
+// register_activation_hook(__FILE__, '_init_dompdf_fonts');
+// function _init_dompdf_fonts() {
+//   // copy DOMPDF fonts to wp-content/dompdf-fonts/
+//   require_once "vendor/autoload.php";
+//   if(!is_dir(DOMPDF_FONT_DIR)) {
+//     @mkdir(DOMPDF_FONT_DIR);
+//   }
+//   if(!file_exists(DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php')) {
+//     copy(
+//       dirname(__FILE__) . 'vendor/dompdf/dompdf/lib/fonts/dompdf_font_family_cache.dist.php',
+//       DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php'
+//       );
+//   }
+// }
 
 /**
  * Applies print templates
