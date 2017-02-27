@@ -385,13 +385,13 @@ function _print_pdf($html) {
         return $dompdf->stream($filename, array("Attachment" => false));
       }
 
-      // create PDF cache if one doesn't yet exist
-      if(!is_dir(PDF_CACHE_DIRECTORY)) {
-        @mkdir(PDF_CACHE_DIRECTORY);
-      }
-
-      //save the pdf file to cache
-      file_put_contents($cached, $dompdf->output());
+    //   // create PDF cache if one doesn't yet exist
+    //   if(!is_dir(PDF_CACHE_DIRECTORY)) {
+    //     @mkdir(PDF_CACHE_DIRECTORY);
+    //   }
+      //
+    //   //save the pdf file to cache
+    //   file_put_contents($cached, $dompdf->output());
     }
 
     //read and display the cached file
