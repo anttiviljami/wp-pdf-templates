@@ -351,7 +351,7 @@ function _print_pdf($html) {
 
       // include the library
       require_once 'dompdf/autoload.inc.php';
-      require_once 'vendor/autoload.php';
+    //   require_once 'vendor/autoload.php';
 
       // html to pdf conversion
       $dompdf = new Dompdf\Dompdf();
