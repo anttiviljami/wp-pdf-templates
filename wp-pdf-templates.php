@@ -208,8 +208,16 @@ function _use_pdf_template() {
     $url = parse_url(get_the_permalink());
 
     // we use localhost to make sure we're requesting the page from this wordpress instance
+
     $link = $url['scheme'] . '://localhost' . $url['path'];
     $link = $link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template';
+
+    // checking to make sure that localhost is writable because
+    // it won't be in many shared hosting environments
+    if (!is_writable($link)) {
+      $link = get_the_permalink();
+      $link = $link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template';
+    }
 
     if(isset($wp_query->query_vars['pdf']) || isset($wp_query->query_vars['pdf-preview'])) {
 
