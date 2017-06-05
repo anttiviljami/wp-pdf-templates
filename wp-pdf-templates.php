@@ -49,7 +49,7 @@
 /**
  * Track plugin version number
  */
-define('WP_PDF_TEMPLATES_VERSION', '1.4.1');
+define('WP_PDF_TEMPLATES_VERSION', '1.4.3');
 
 /**
  * Option to disable PDF caching
@@ -159,20 +159,20 @@ function _flush_pdf_rewrite_rules() {
 /**
  * Creates a directory for any new fonts the user may upload
  */
-register_activation_hook(__FILE__, '_init_dompdf_fonts');
-function _init_dompdf_fonts() {
-  // copy DOMPDF fonts to wp-content/dompdf-fonts/
-  require_once "vendor/autoload.php";
-  if(!is_dir(DOMPDF_FONT_DIR)) {
-    @mkdir(DOMPDF_FONT_DIR);
-  }
-  if(!file_exists(DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php')) {
-    copy(
-      dirname(__FILE__) . 'vendor/dompdf/dompdf/lib/fonts/dompdf_font_family_cache.dist.php',
-      DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php'
-      );
-  }
-}
+// register_activation_hook(__FILE__, '_init_dompdf_fonts');
+// function _init_dompdf_fonts() {
+//   // copy DOMPDF fonts to wp-content/dompdf-fonts/
+//   require_once "vendor/autoload.php";
+//   if(!is_dir(DOMPDF_FONT_DIR)) {
+//     @mkdir(DOMPDF_FONT_DIR);
+//   }
+//   if(!file_exists(DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php')) {
+//     copy(
+//       dirname(__FILE__) . 'vendor/dompdf/dompdf/lib/fonts/dompdf_font_family_cache.dist.php',
+//       DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php'
+//       );
+//   }
+// }
 
 /**
  * Applies print templates
@@ -221,6 +221,14 @@ function _use_pdf_template() {
       $header = 'Host:' . $url['host'] . "\n";
 
       if( defined('FETCH_COOKIES_ENABLED') && FETCH_COOKIES_ENABLED ) {
+
+        // unlock the session file if a session exists
+        if ( !empty( session_id() ) ) {
+          session_write_close(); // you can't have two parallel php heaps with the same session id
+          // we don't need the session after this point anyway so it should be fine
+          // the file_get_contents heap will have its own session and do whatever it needs to
+        }
+
         // pass cookies from current request
         if( isset( $_SERVER['HTTP_COOKIE'] ) ) {
           $header .= 'Cookie: ' . $_SERVER['HTTP_COOKIE'] . "\n";
@@ -348,7 +356,8 @@ function _print_pdf($html) {
       //set_time_limit(60);
 
       // include the library
-      require_once 'vendor/autoload.php';
+      require_once 'dompdf/autoload.inc.php';
+    //   require_once 'vendor/autoload.php';
 
       // html to pdf conversion
       $dompdf = new Dompdf\Dompdf();
@@ -382,13 +391,13 @@ function _print_pdf($html) {
         return $dompdf->stream($filename, array("Attachment" => false));
       }
 
-      // create PDF cache if one doesn't yet exist
-      if(!is_dir(PDF_CACHE_DIRECTORY)) {
-        @mkdir(PDF_CACHE_DIRECTORY);
-      }
-
-      //save the pdf file to cache
-      file_put_contents($cached, $dompdf->output());
+    //   // create PDF cache if one doesn't yet exist
+    //   if(!is_dir(PDF_CACHE_DIRECTORY)) {
+    //     @mkdir(PDF_CACHE_DIRECTORY);
+    //   }
+      //
+    //   //save the pdf file to cache
+    //   file_put_contents($cached, $dompdf->output());
     }
 
     //read and display the cached file
