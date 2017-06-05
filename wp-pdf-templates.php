@@ -331,9 +331,15 @@ function _print_pdf($html) {
   if (isset($wp_query->query_vars['pdf'])) {
     // convert to PDF
 
-    $title_sanitized = sanitize_file_name( get_the_title() );
-    $filename = $title_sanitized . '.pdf';
-    $cached = PDF_CACHE_DIRECTORY . $title_sanitized . '-' . substr(md5(get_the_modified_time()), -6) . '.pdf';
+    $filename = sanitize_file_name(get_the_title());
+    $cache_id = substr(md5(get_the_modified_time()), -6);
+
+    $filename = apply_filters('pdf_template_filename', $filename);
+    $cache_id = apply_filters('pdf_template_cache_id', $cache_id);
+
+    $cached = PDF_CACHE_DIRECTORY . $filename . '-' . $cache_id . '.pdf';
+
+    $filename .= '.pdf';
 
     // check if we need to generate PDF against cache
     if(( defined('DISABLE_PDF_CACHE') && DISABLE_PDF_CACHE ) || ( isset($_SERVER['HTTP_PRAGMA']) && $_SERVER['HTTP_PRAGMA'] == 'no-cache' ) || !file_exists($cached) ) {
@@ -404,4 +410,3 @@ function _print_pdf($html) {
   die();
 
 }
-
