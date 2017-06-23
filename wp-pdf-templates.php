@@ -101,6 +101,17 @@ if (!defined('DOMPDF_FONT_DIR'))
 if (!defined('DOMPDF_FONT_CACHE'))
   define('DOMPDF_FONT_CACHE', $upload_dir['basedir'] . '/dompdf-fonts/');
 
+/**
+ * Set defaults
+ */
+if (!defined('DOMPDF_DEFAULT_PAPER_SIZE'))
+  define('DOMPDF_DEFAULT_PAPER_SIZE', 'A4');
+
+if (!defined('DOMPDF_DEFAULT_PAPER_ORIENTATION'))
+  define('DOMPDF_DEFAULT_PAPER_ORIENTATION', 'portrait');
+
+if (!defined('DOMPDF_DEFAULT_DPI'))
+  define('DOMPDF_DEFAULT_DPI', 180);
 
 /**
  * This function can be used to set PDF print support for custom post types.
@@ -355,7 +366,8 @@ function _print_pdf($html) {
 
       $dompdf->setPaper(
         defined('DOMPDF_PAPER_SIZE') ? DOMPDF_PAPER_SIZE : DOMPDF_DEFAULT_PAPER_SIZE,
-        defined('DOMPDF_PAPER_ORIENTATION') ? DOMPDF_PAPER_ORIENTATION : 'portrait');
+        defined('DOMPDF_PAPER_ORIENTATION') ? DOMPDF_PAPER_ORIENTATION : DOMPDF_DEFAULT_PAPER_ORIENTATION
+      );
 
       $options = $dompdf->getOptions();
       $options->set(array(
@@ -366,7 +378,7 @@ function _print_pdf($html) {
       ));
 
       // allow setting a different DPI value
-      if( defined('DOMPDF_DPI') ) $options->set(array('dpi' => DOMPDF_DPI));
+      $options->set( array( 'dpi' => defined('DOMPDF_DPI') ? DOMPDF_DPI : DOMPDF_DEFAULT_DPI ) );
 
       $dompdf->setOptions($options);
 
