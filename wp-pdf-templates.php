@@ -207,8 +207,8 @@ function _use_pdf_template() {
     // our post permalink
     $url = parse_url(get_the_permalink());
 
-    // we use localhost to make sure we're requesting the page from this wordpress instance
-    $link = $url['scheme'] . '://localhost' . $url['path'];
+    // make sure we're requesting the page from this wordpress instance
+    $link = get_site_url() . $url['path'];
     $link = $link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template';
 
     if(isset($wp_query->query_vars['pdf']) || isset($wp_query->query_vars['pdf-preview'])) {
@@ -218,7 +218,8 @@ function _use_pdf_template() {
 
       // since we're always requesting this from localhost, we need to set the Host
       // header for WordPress to route our request correctly
-      $header = 'Host:' . $url['host'] . "\n";
+      $hostWithPort = (array_key_exists('port', $url) && strlen($url['port']) > 0) ? sprintf('%s:%s', $url['host'], $url['port']) : $url['host'];
+      $header       = 'Host:' . $hostWithPort . "\n";
 
       if( defined('FETCH_COOKIES_ENABLED') && FETCH_COOKIES_ENABLED ) {
         // pass cookies from current request
