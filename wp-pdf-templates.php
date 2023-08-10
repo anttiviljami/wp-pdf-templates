@@ -3,7 +3,7 @@
  * Plugin Name: WordPress PDF Templates
  * Plugin URI: https://github.com/anttiviljami/wp-pdf-templates
  * Description: This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
- * Version: 1.4.3
+ * Version: 1.5.0
  * Author: @anttiviljami
  * Author URI: https://github.com/anttiviljami
  * License: GPLv3
