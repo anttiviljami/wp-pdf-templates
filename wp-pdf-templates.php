@@ -354,7 +354,7 @@ function _print_pdf($html) {
       $dompdf = new Dompdf\Dompdf();
 
       $dompdf->setPaper(
-        defined('DOMPDF_PAPER_SIZE') ? DOMPDF_PAPER_SIZE : DOMPDF_DEFAULT_PAPER_SIZE,
+        defined('DOMPDF_PAPER_SIZE') ? DOMPDF_PAPER_SIZE : 'letter',
         defined('DOMPDF_PAPER_ORIENTATION') ? DOMPDF_PAPER_ORIENTATION : 'portrait');
 
       $options = $dompdf->getOptions();
